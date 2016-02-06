@@ -14,27 +14,26 @@ int main(int argc,char **argv)
     // Check if sufficient arguments were supplied
     if(argc != 3)
     {
-        printf("\nUsage: %s [protocol][number-of-packets]\n",argv[0]);
+        printf("\nUsage: %s [filter_expr][number-of-packets]\n",argv[0]);
         return 0;
     }
-
-    //pcap_if_t *alldevsp , *device;
-    //pcap_t *handle; //Handle of the device that shall be sniffed
 
     char devs[100][100];
     int count = 1 , n;
 
     //First get the list of available devices
     printf("Finding available devices ... ");
+
     if( pcap_findalldevs( &alldevs , errbuf) )
     {
         printf("Error finding devices : %s" , errbuf);
         exit(1);
     }
-    printf("Done");
+    printf("Done.");
 
     //Print the available devices
     printf("\nAvailable Devices are :\n");
+
     for(device = alldevs ; device != NULL ; device = device->next)
     {
         printf("%d. %s - %s\n" , count , device->name , device->description);

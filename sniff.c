@@ -21,7 +21,7 @@ void callback(u_char *useless,const struct pcap_pkthdr* pkthdr, const u_char* bu
     ++total;
 
     print_ip_header(buffer,size);
-    switch (iph->protocol) //Check the Protocol and do accordingly...
+    switch (iph->protocol)
     {
     case 1:  //ICMP Protocol
         ++icmp_c;
@@ -53,23 +53,6 @@ void callback(u_char *useless,const struct pcap_pkthdr* pkthdr, const u_char* bu
 void print_ethernet_header(const u_char *buffer, int size)
 {
     struct ethhdr *eth = (struct ethhdr *)buffer;
-//    char eth_daddr[18], eth_saddr[18];
-
-//    sprintf(eth_daddr,  "%.2X-%.2X-%.2X-%.2X-%.2X-%.2X\n",
-//            eth->h_dest[0],
-//            eth->h_dest[1],
-//            eth->h_dest[2],
-//            eth->h_dest[3],
-//            eth->h_dest[4],
-//            eth->h_dest[5]);
-
-//    sprintf(eth_saddr,  "%.2X-%.2X-%.2X-%.2X-%.2X-%.2X \n",
-//            eth->h_source[0],
-//            eth->h_source[1],
-//            eth->h_source[2],
-//            eth->h_source[3],
-//            eth->h_source[4],
-//            eth->h_source[5]);
 
     fprintf(logfile , "\n");
     fprintf(logfile , "Ethernet Header\n");
@@ -96,9 +79,6 @@ void print_ip_header(const u_char * buffer, int size)
     fprintf(logfile , "   |-Type Of Service   : %d\n",(unsigned int)iph->tos);
     fprintf(logfile , "   |-IP Total Length   : %d  Bytes(Size of Packet)\n",ntohs(iph->tot_len));
     fprintf(logfile , "   |-Identification    : %d\n",ntohs(iph->id));
-    //fprintf(logfile , "   |-Reserved ZERO Field   : %d\n",(unsigned int)iphdr->ip_reserved_zero);
-    //fprintf(logfile , "   |-Dont Fragment Field   : %d\n",(unsigned int)iphdr->ip_dont_fragment);
-    //fprintf(logfile , "   |-More Fragment Field   : %d\n",(unsigned int)iphdr->ip_more_fragment);
     fprintf(logfile , "   |-TTL      : %d\n",(unsigned int)iph->ttl);
     fprintf(logfile , "   |-Protocol : %d\n",(unsigned int)iph->protocol);
     fprintf(logfile , "   |-Checksum : %d\n",ntohs(iph->check));
@@ -128,8 +108,6 @@ void print_tcp_packet(const u_char * buffer, int size)
     fprintf(logfile , "   |-Sequence Number    : %u\n",ntohl(tcph->seq));
     fprintf(logfile , "   |-Acknowledge Number : %u\n",ntohl(tcph->ack_seq));
     fprintf(logfile , "   |-Header Length      : %d DWORDS or %d BYTES\n" ,(unsigned int)tcph->doff,(unsigned int)tcph->doff*4);
-    //fprintf(logfile , "   |-CWR Flag : %d\n",(unsigned int)tcph->cwr);
-    //fprintf(logfile , "   |-ECN Flag : %d\n",(unsigned int)tcph->ece);
     fprintf(logfile , "   |-Urgent Flag          : %d\n",(unsigned int)tcph->urg);
     fprintf(logfile , "   |-Acknowledgement Flag : %d\n",(unsigned int)tcph->ack);
     fprintf(logfile , "   |-Push Flag            : %d\n",(unsigned int)tcph->psh);
