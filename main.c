@@ -49,16 +49,12 @@ int main(int argc,char **argv)
     scanf("%d" , &n);
     devname = devs[n];
 
-    // Check if something was provided
-    // by user
     if(strlen(dev_buff))
     {
         devname = dev_buff;
         printf("\n ---You opted for device [%s] to capture [%d] packets---\n\n Starting capture...",devname, (atoi)(argv[2]));
     }
 
-    // If something was not provided
-    // return error.
     if(devname == NULL)
     {
         printf("\n[%s]\n", errbuf);
@@ -97,9 +93,6 @@ int main(int argc,char **argv)
         exit(1);
     }
 
-    // For every packet received, call the callback function
-    // For now, maximum limit on number of packets is specified
-    // by user.
     pcap_loop(descr,atoi(argv[2]), callback, NULL);
 
     printf("\nDone with packet sniffing!\n");
